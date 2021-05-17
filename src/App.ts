@@ -5,11 +5,8 @@ class App {
         try {
             const model = new Model();
 
-            // eslint-disable-next-line no-constant-condition
-            while (true) {
-                console.log(`Time: ${model.time}, Mandalas: ${model.mandalas}, Participants: ${model.participants}`);
-                // eslint-disable-next-line no-await-in-loop
-                await this.requestInput("");
+            // eslint-disable-next-line no-await-in-loop
+            while (await App.continue(model)) {
                 model.split();
             }
 
@@ -22,6 +19,13 @@ class App {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static async continue({ time, mandalas, participants }: Model) {
+        console.log(`Time: ${time}, Mandalas: ${mandalas}, Participants: ${participants}`);
+        const response = (await this.requestInput("Continue [Y]: ")).toLowerCase();
+
+        return response === "y" || response === "";
+    }
 
     private static async requestInput(prompt: string) {
         process.stdout.write(prompt);
