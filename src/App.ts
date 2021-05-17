@@ -1,9 +1,17 @@
-// eslint-disable-next-line strict
+import { Model } from "./Model";
+
 class App {
     public static async main() {
         try {
-            const name = await this.requestInput("Hello, what's your name: ");
-            console.log(`Hello, ${name}.`);
+            const model = new Model();
+
+            // eslint-disable-next-line no-constant-condition
+            while (true) {
+                console.log(`Time: ${model.time}, Mandalas: ${model.mandalas}, Participants: ${model.participants}`);
+                // eslint-disable-next-line no-await-in-loop
+                await this.requestInput("");
+                model.split();
+            }
 
             return 0;
         } catch (ex: unknown) {
